@@ -97,7 +97,7 @@ export const SLIDES: SlideData[] = [
     }
   },
 
-  // 3. FLIP CARDS (RESTORING ALL 25)
+  // 3. FLIP CARDS
   {
     id: 3,
     type: SlideType.VERB_GRID,
@@ -134,7 +134,7 @@ export const SLIDES: SlideData[] = [
     }
   },
 
-  // 4. V2 SENTENCE BUILDER (Labels Fixed)
+  // 4. V2 SENTENCE BUILDER
   {
     id: 4,
     type: SlideType.V2_SENTENCE_BUILDER,
@@ -192,8 +192,30 @@ export const SLIDES: SlideData[] = [
     content: {
       rule: "IMPORTANT: When you use DID or DIDN'T, the verb resets to V1. Do not use V2!",
       formulas: [
-        { label: "Negative", structure: "Subject + didn't + V1", example: "I didn't go home." },
-        { label: "Question", structure: "Did + Subject + V1?", example: "Did you go home?" }
+        { 
+          label: "Negative", 
+          structure: "Subject + didn't + V1", 
+          example: "I didn't go home.",
+          extraExamples: [
+            "I didn't eat breakfast.",
+            "She didn't watch TV.",
+            "We didn't play football.",
+            "He didn't drink coffee.",
+            "They didn't swim in the sea."
+          ]
+        },
+        { 
+          label: "Question", 
+          structure: "Did + Subject + V1?", 
+          example: "Did you go home?",
+          extraExamples: [
+             "Did you sleep well?",
+             "Did he call you?",
+             "Did they win the match?",
+             "Did she cook dinner?",
+             "Did it rain yesterday?"
+          ]
+        }
       ]
     }
   },
@@ -242,7 +264,7 @@ export const SLIDES: SlideData[] = [
     }
   },
 
-  // 10. SPEAKING HUB (Specific Content for resim1-resim8)
+  // 10. SPEAKING HUB (UPDATED VOCABULARY)
   {
     id: 10,
     type: SlideType.SPEAKING_HUB,
@@ -252,67 +274,67 @@ export const SLIDES: SlideData[] = [
       images: [
         { 
           url: "./media/resim1.jpg",
-          title: "1. Photo – Morning",
-          verbs: ["wake up → woke up", "sleep → slept", "be → was"],
-          objects: ["bed", "alarm clock", "room"],
-          places: [],
-          time: ["in the morning", "at 06:00"]
+          title: "1. The Alarm",
+          verbs: ["wake up → woke up", "sleep → slept", "be → was", "open → opened", "smile → smiled"],
+          objects: ["bed", "alarm clock", "room", "window", "pyjamas"],
+          places: ["in his bedroom", "in bed"],
+          time: ["in the morning", "at 06:00", "early"]
         },
         { 
           url: "./media/resim2.jpg",
-          title: "2. Photo – Leaving School",
-          verbs: ["leave → left", "go → went", "have → had"],
-          objects: ["school", "gate", "bag"],
-          places: ["from the school"],
-          time: ["in the morning", "at 09:00"]
+          title: "2. Leaving",
+          verbs: ["leave → left", "go → went", "walk → walked", "carry → carried", "wear → wore"],
+          objects: ["uniform", "school gate", "small bag", "clock"],
+          places: ["from the school", "out of the gate"],
+          time: ["at 09:00", "in the morning"]
         },
         { 
           url: "./media/resim3.jpg",
-          title: "3. Photo – On the Bus",
-          verbs: ["take → took", "sit → sat", "travel → travelled"],
-          objects: ["bus", "seat", "window"],
-          places: ["in the city", "on the bus"],
-          time: []
+          title: "3. The Journey",
+          verbs: ["take → took", "sit → sat", "travel → travelled", "look → looked", "go → went"],
+          objects: ["bus", "seat", "window", "passenger", "city"],
+          places: ["on the bus", "to the city centre"],
+          time: ["during the day", "in the morning"]
         },
         { 
           url: "./media/resim4.jpg",
-          title: "4. Photo – Café",
-          verbs: ["meet → met", "drink → drank", "talk → talked", "say → said"],
-          objects: ["friends", "tea", "table"],
-          places: ["at a café"],
-          time: ["in the afternoon"]
+          title: "4. Meeting Friends",
+          verbs: ["meet → met", "drink → drank", "talk → talked", "laugh → laughed", "sit → sat"],
+          objects: ["cup of tea", "table", "chair", "friends", "menu"],
+          places: ["at a café", "in the city centre"],
+          time: ["in the afternoon", "at lunch time"]
         },
         { 
           url: "./media/resim5.jpg",
-          title: "5. Photo – Shop Problem",
-          verbs: ["go → went", "look for → looked for", "lose → lost", "buy → bought / didn’t buy"],
-          objects: ["wallet", "bag", "shop"],
-          places: [],
-          time: ["later"]
+          title: "5. The Problem",
+          verbs: ["look for → looked for", "lose → lost", "check → checked", "cannot find → couldn't find", "want → wanted"],
+          objects: ["wallet", "pocket", "bag", "money", "shop assistant"],
+          places: ["in a shop", "at the counter"],
+          time: ["later", "then"]
         },
         { 
           url: "./media/resim6.jpg",
-          title: "6. Photo – Walking Alone",
-          verbs: ["walk → walked", "feel → felt", "think → thought"],
-          objects: ["street", "lights"],
-          places: ["outside"],
-          time: ["in the evening"]
+          title: "6. Walking Alone",
+          verbs: ["walk → walked", "feel → felt", "think → thought", "worry → worried", "be → was"],
+          objects: ["street light", "pavement", "empty street"],
+          places: ["outside", "in the street"],
+          time: ["in the evening", "getting dark"]
         },
         { 
           url: "./media/resim7.jpg",
-          title: "7. Photo – Returning to Base",
-          verbs: ["come back → came back", "return → returned", "arrive → arrived"],
-          objects: ["base", "gate"],
-          places: ["at the base"],
-          time: ["at 21:00", "in the evening"]
+          title: "7. Back to Base",
+          verbs: ["come back → came back", "return → returned", "arrive → arrived", "enter → entered"],
+          objects: ["base gate", "guard", "clock"],
+          places: ["at the base", "to the school"],
+          time: ["at 21:00", "at night", "late"]
         },
         { 
           url: "./media/resim8.jpg",
-          title: "8. Photo – Talking to Commander",
-          verbs: ["tell → told", "explain → explained", "listen → listened", "be → was"],
-          objects: ["commander", "office / room"],
-          places: ["at the base"],
-          time: []
+          title: "8. The Explanation",
+          verbs: ["tell → told", "explain → explained", "listen → listened", "speak → spoke", "say → said"],
+          objects: ["commander", "officer", "report", "incident"],
+          places: ["in the office", "at headquarters"],
+          time: ["at night", "after the leave"]
         }
       ]
     }
@@ -337,9 +359,107 @@ export const SLIDES: SlideData[] = [
     }
   },
 
-  // 12. DEBRIEF
+  // 12. WRITTEN QUIZ (EXTENDED STORY MODE)
   {
     id: 12,
+    type: SlideType.WRITTEN_QUIZ,
+    title: "Incident Report: The Late Cadet",
+    subtitle: "Complete the dialogue & Sign to submit",
+    content: {
+      context: "Cadet Jack is late for the morning meeting. Commander Stone is asking him questions. Fill in the blanks to complete the official record.",
+      questions: [
+        {
+          id: 1,
+          speaker: "Cadet Jack",
+          question: "Good morning, Sir. ______ I'm late.",
+          options: ["I sorry", "I'm sorry", "Sorry for"],
+          correctIndex: 1
+        },
+        {
+          id: 2,
+          speaker: "Commander Stone",
+          question: "This is the second time, Jack. Why are you late? What happened?",
+          speaker2: "Cadet Jack",
+          question2: "I ______ the bus, Sir.",
+          options: ["lost", "missed", "left"],
+          correctIndex: 1
+        },
+        {
+          id: 3,
+          speaker: "Cadet Jack",
+          question: "Also, there was a problem ______ my alarm clock. It didn't ring.",
+          options: ["with", "of", "about"],
+          correctIndex: 0
+        },
+        {
+          id: 4,
+          speaker: "Commander Stone",
+          question: "Did you take a taxi?",
+          speaker2: "Cadet Jack",
+          question2: "No, Sir. I left my wallet ______ home.",
+          options: ["in", "on", "at"],
+          correctIndex: 2
+        },
+        {
+          id: 5,
+          speaker: "Commander Stone",
+          question: "That is not good, Jack. You must be on time.",
+          speaker2: "Cadet Jack",
+          question2: "I am ______ sorry, Sir. I promise it won't happen again.",
+          options: ["very", "much", "many"],
+          correctIndex: 0
+        },
+        {
+          id: 6,
+          speaker: "Commander Stone",
+          question: "Okay, Jack. I ______ your apology. But be careful.",
+          options: ["except", "accept", "expect"],
+          correctIndex: 1
+        },
+        {
+          id: 7,
+          speaker: "Cadet Jack",
+          question: "Thank you, Sir.",
+          speaker2: "Commander Stone",
+          question2: "You are dismissed. ______.",
+          options: ["No problem", "Bad luck", "See you yesterday"],
+          correctIndex: 0
+        }
+      ]
+    }
+  },
+
+  // 13. TIME OPERATIONS (COMPLEX DRILLS)
+  {
+    id: 13,
+    type: SlideType.TIME_DRILL,
+    title: "Operation: Chrono",
+    subtitle: "Telling the Time",
+    content: {
+      explanation: [
+        { label: "O'CLOCK", desc: "For exact hours (12:00, 05:00)" },
+        { label: "HALF PAST", desc: "For 30 minutes (04:30, 10:30)" },
+        { label: "PAST", desc: "For minutes 1-30 (10 past, 20 past)" },
+        { label: "TO", desc: "For minutes 31-59 (10 to, 5 to)" }
+      ],
+      games: [
+        { time: "07:20", options: ["Twenty past seven", "Twenty to seven", "Seven twenty"], correct: "Twenty past seven" },
+        { time: "08:55", options: ["Five past nine", "Five to nine", "Nine fifty-five"], correct: "Five to nine" },
+        { time: "04:25", options: ["Twenty-five past four", "Quarter past four", "Twenty-five to four"], correct: "Twenty-five past four" },
+        { time: "11:50", options: ["Ten to twelve", "Ten past eleven", "Twelve ten"], correct: "Ten to twelve" },
+        { time: "09:23", options: ["Twenty-three minutes past nine", "Half past nine", "Twenty-three to nine"], correct: "Twenty-three minutes past nine" },
+        { time: "06:45", options: ["Quarter to seven", "Quarter past six", "Seven forty-five"], correct: "Quarter to seven" },
+        { time: "02:10", options: ["Ten past two", "Ten to two", "Two ten"], correct: "Ten past two" },
+        { time: "03:40", options: ["Twenty to four", "Twenty past three", "Four forty"], correct: "Twenty to four" },
+        { time: "05:05", options: ["Five past five", "Five to five", "Half past five"], correct: "Five past five" },
+        { time: "12:35", options: ["Twenty-five to one", "Twenty-five past twelve", "Half past twelve"], correct: "Twenty-five to one" }
+      ]
+    }
+  },
+
+  // 14. DEBRIEF
+  {
+    id: 14,
     type: SlideType.DEBRIEF,
     title: "Mission Debrief",
     subtitle: "Summary of Learning",

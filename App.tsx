@@ -14,6 +14,8 @@ import {
   ReadingComprehensionSlide,
   SpeakingHubSlide,
   ApologyResponseSlide,
+  WrittenQuizSlide,
+  TimeDrillSlide,
   DebriefSlide
 } from './components/SlideComponents';
 
@@ -61,6 +63,8 @@ const App = () => {
       case SlideType.READING_COMPREHENSION: return <ReadingComprehensionSlide data={currentSlide} />;
       case SlideType.SPEAKING_HUB: return <SpeakingHubSlide data={currentSlide} />;
       case SlideType.APOLOGY_RESPONSE: return <ApologyResponseSlide data={currentSlide} />;
+      case SlideType.WRITTEN_QUIZ: return <WrittenQuizSlide data={currentSlide} />;
+      case SlideType.TIME_DRILL: return <TimeDrillSlide data={currentSlide} />;
       case SlideType.DEBRIEF: return <DebriefSlide data={currentSlide} />;
       default: return <div className="p-10">Slide content not implemented</div>;
     }

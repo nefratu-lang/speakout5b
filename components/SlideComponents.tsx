@@ -260,7 +260,7 @@ export const IFrameSlide: React.FC<{ data: SlideData }> = ({ data }) => {
   );
 };
 
-// --- Negatives & Questions Explanation Slide ---
+// --- Negatives & Questions Explanation Slide (UPDATED WITH EXAMPLES) ---
 export const NegativesQuestionsSlide: React.FC<{ data: SlideData }> = ({ data }) => {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center p-4 md:p-12 bg-slate-900 text-white overflow-y-auto custom-scrollbar">
@@ -273,12 +273,26 @@ export const NegativesQuestionsSlide: React.FC<{ data: SlideData }> = ({ data })
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {data.content.formulas.map((f: any, i: number) => (
-               <div key={i} className={`p-8 rounded-[2.5rem] border-4 transition-all hover:scale-105 ${i === 0 ? 'bg-red-500/10 border-red-500/30' : 'bg-blue-500/10 border-blue-500/30'}`}>
+               <div key={i} className={`flex flex-col h-full p-8 rounded-[2.5rem] border-4 transition-all hover:scale-105 ${i === 0 ? 'bg-red-500/10 border-red-500/30' : 'bg-blue-500/10 border-blue-500/30'}`}>
                   <h4 className={`text-2xl font-black uppercase mb-4 ${i === 0 ? 'text-red-400' : 'text-blue-400'}`}>{f.label}</h4>
                   <div className="bg-black/40 p-6 rounded-2xl mb-6 font-mono text-xl md:text-2xl text-white border border-white/10">
                      {f.structure}
                   </div>
-                  <div className="italic text-slate-400 text-lg">Example: <span className="text-white font-bold">{f.example}</span></div>
+                  <div className="italic text-slate-400 text-lg mb-6">Example: <span className="text-white font-bold">{f.example}</span></div>
+                  
+                  {/* EXTRA EXAMPLES SECTION */}
+                  {f.extraExamples && (
+                      <div className="mt-auto bg-black/20 p-4 rounded-xl">
+                          <p className="text-xs uppercase font-bold text-slate-500 mb-2 tracking-widest">More Examples:</p>
+                          <ul className="space-y-1">
+                              {f.extraExamples.map((ex: string, idx: number) => (
+                                  <li key={idx} className="text-sm md:text-base font-medium text-slate-300">
+                                      • {ex}
+                                  </li>
+                              ))}
+                          </ul>
+                      </div>
+                  )}
                </div>
              ))}
           </div>
@@ -398,7 +412,7 @@ export const ReadingComprehensionSlide: React.FC<{ data: SlideData }> = ({ data 
   );
 };
 
-// --- SPEAKING HUB ---
+// --- SPEAKING HUB (UPDATED LAYOUT) ---
 export const SpeakingHubSlide: React.FC<{ data: SlideData }> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -425,7 +439,7 @@ export const SpeakingHubSlide: React.FC<{ data: SlideData }> = ({ data }) => {
                    <p className="flex gap-3"><span className="text-ocean-600 font-black">2.</span> Click to see it bigger.</p>
                 </div>
                 <div className="space-y-4 text-sm md:text-base">
-                   <p className="flex gap-3"><span className="text-ocean-600 font-black">3.</span> Use the "Help Words" menu below the photo.</p>
+                   <p className="flex gap-3"><span className="text-ocean-600 font-black">3.</span> Use the "Help Words" on the sides.</p>
                    <p className="flex gap-3"><span className="text-ocean-600 font-black">4.</span> Describe the situation in Past Simple.</p>
                 </div>
              </div>
@@ -444,34 +458,58 @@ export const SpeakingHubSlide: React.FC<{ data: SlideData }> = ({ data }) => {
        </div>
 
        {activeIndex !== null && (
-         <div className="fixed inset-0 z-[100] bg-slate-900/95 flex flex-col items-center justify-start overflow-y-auto pt-10 pb-20 px-4" onClick={closePhoto}>
-            <div className="relative max-w-5xl w-full flex flex-col gap-8" onClick={e => e.stopPropagation()}>
-               <button onClick={closePhoto} className="absolute -top-10 right-0 text-white text-5xl font-light hover:text-red-400 transition-colors z-50">&times;</button>
+         <div className="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center p-4 overflow-hidden" onClick={closePhoto}>
+            <button onClick={closePhoto} className="absolute top-4 right-4 text-white/50 hover:text-white text-5xl font-light z-50 transition-colors">&times;</button>
+            
+            <div className="max-w-[1600px] w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8" onClick={e => e.stopPropagation()}>
                
-               {/* BORDERLESS PHOTO DISPLAY */}
-               <div className="relative w-full flex items-center justify-center">
-                  <img src={data.content.images[activeIndex].url} className="max-w-full max-h-[75vh] object-contain shadow-2xl rounded-lg" alt="Speaking Support" />
-                  
-                  <button onClick={prevPhoto} className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-4 rounded-full text-white backdrop-blur-sm transition-all">
-                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7"/></svg>
-                  </button>
-                  <button onClick={nextPhoto} className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-4 rounded-full text-white backdrop-blur-sm transition-all">
-                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"/></svg>
-                  </button>
+               {/* LEFT PANEL: VERBS (Desktop) */}
+               <div className="hidden md:flex flex-col w-64 shrink-0 gap-4 animate-in slide-in-from-left-4">
+                   <HelpWordCategory title="Verbs (V1 → V2)" words={data.content.images[activeIndex].verbs} color="text-green-300" bgColor="bg-slate-800/80" isDark={true} />
                </div>
 
-               {/* BOTTOM SUPPORT MENU - BELOW PHOTO */}
-               <div className="bg-white rounded-[2rem] p-10 shadow-2xl w-full border-t-8 border-ocean-600">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-6 mb-8">
-                     <h3 className="text-4xl font-black text-ocean-900 uppercase">{data.content.images[activeIndex].title}</h3>
-                     <span className="text-base font-black text-slate-400 bg-slate-100 px-6 py-2 rounded-full uppercase tracking-widest">Language Support</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                     <HelpWordCategory title="Verbs (V1 → V2)" words={data.content.images[activeIndex].verbs} color="text-green-600" bgColor="bg-green-50" />
-                     <HelpWordCategory title="Objects" words={data.content.images[activeIndex].objects} color="text-red-600" bgColor="bg-red-50" />
-                     <HelpWordCategory title="Time / Place" words={[...(data.content.images[activeIndex].places || []), ...(data.content.images[activeIndex].time || [])]} color="text-amber-600" bgColor="bg-amber-50" />
-                  </div>
+               {/* CENTER: IMAGE & NAV */}
+               <div className="relative flex-1 max-h-full flex flex-col items-center justify-center group">
+                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-700 max-h-[70vh] md:max-h-[85vh]">
+                       <img src={data.content.images[activeIndex].url} className="max-w-full max-h-full object-contain" alt="Speaking Support" />
+                   </div>
+                   
+                   <div className="text-center mt-6">
+                       <h3 className="text-3xl font-black text-white uppercase tracking-widest">{data.content.images[activeIndex].title}</h3>
+                   </div>
+
+                   {/* Nav Buttons */}
+                   <button onClick={prevPhoto} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 bg-white/10 hover:bg-white/30 p-4 rounded-full text-white backdrop-blur-sm transition-all hidden md:block">
+                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7"/></svg>
+                   </button>
+                   <button onClick={nextPhoto} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 bg-white/10 hover:bg-white/30 p-4 rounded-full text-white backdrop-blur-sm transition-all hidden md:block">
+                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"/></svg>
+                   </button>
+               </div>
+
+               {/* RIGHT PANEL: OBJECTS/TIME (Desktop) */}
+               <div className="hidden md:flex flex-col w-64 shrink-0 gap-4 animate-in slide-in-from-right-4">
+                   <HelpWordCategory title="Vocabulary" words={data.content.images[activeIndex].objects} color="text-red-300" bgColor="bg-slate-800/80" isDark={true} />
+                   <HelpWordCategory title="Time & Place" words={[...(data.content.images[activeIndex].places || []), ...(data.content.images[activeIndex].time || [])]} color="text-amber-300" bgColor="bg-slate-800/80" isDark={true} />
+               </div>
+
+               {/* MOBILE OVERLAY (Nav + Text Stacked) */}
+               <div className="md:hidden absolute bottom-0 left-0 right-0 bg-slate-900/95 p-6 rounded-t-3xl max-h-[40vh] overflow-y-auto">
+                    <div className="flex justify-between items-center mb-4">
+                        <button onClick={prevPhoto} className="p-2 bg-white/10 rounded-full text-white"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/></svg></button>
+                        <h3 className="text-xl font-bold text-white uppercase">{data.content.images[activeIndex].title}</h3>
+                        <button onClick={nextPhoto} className="p-2 bg-white/10 rounded-full text-white"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg></button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <h4 className="text-green-300 text-xs font-bold uppercase">Verbs</h4>
+                            {data.content.images[activeIndex].verbs.map((w: string, i: number) => <div key={i} className="text-slate-300 text-xs bg-white/5 p-1 rounded">{w}</div>)}
+                        </div>
+                        <div className="space-y-2">
+                            <h4 className="text-amber-300 text-xs font-bold uppercase">Context</h4>
+                             {data.content.images[activeIndex].objects.map((w: string, i: number) => <div key={i} className="text-slate-300 text-xs bg-white/5 p-1 rounded">{w}</div>)}
+                        </div>
+                    </div>
                </div>
             </div>
          </div>
@@ -480,13 +518,13 @@ export const SpeakingHubSlide: React.FC<{ data: SlideData }> = ({ data }) => {
   );
 };
 
-const HelpWordCategory = ({ title, words, color, bgColor }: { title: string, words: string[], color: string, bgColor: string }) => (
-  <div className={`${bgColor} p-6 rounded-3xl border border-current/10 h-full shadow-sm`}>
-    <h4 className={`text-sm font-black uppercase mb-4 ${color} border-b border-current/20 pb-2 tracking-tighter`}>{title}</h4>
-    <div className="flex flex-wrap gap-3">
+const HelpWordCategory = ({ title, words, color, bgColor, isDark = false }: { title: string, words: string[], color: string, bgColor: string, isDark?: boolean }) => (
+  <div className={`${bgColor} p-5 rounded-2xl border border-white/10 h-full shadow-lg backdrop-blur-md`}>
+    <h4 className={`text-sm font-black uppercase mb-4 ${color} border-b border-white/10 pb-2 tracking-tighter`}>{title}</h4>
+    <div className="flex flex-col gap-2">
       {words.length > 0 ? words.map((w, i) => (
-        <span key={i} className="bg-white px-4 py-2 rounded-xl text-sm font-black text-slate-700 shadow-sm border border-slate-100">{w}</span>
-      )) : <span className="text-slate-400 text-xs italic">No specific cues</span>}
+        <span key={i} className={`${isDark ? 'bg-black/30 text-white border-white/5' : 'bg-white text-slate-700 border-slate-100'} px-3 py-2 rounded-lg text-sm font-bold shadow-sm border`}>{w}</span>
+      )) : <span className="text-slate-500 text-xs italic">No specific cues</span>}
     </div>
   </div>
 );
@@ -561,6 +599,299 @@ export const ApologyResponseSlide: React.FC<{ data: SlideData }> = ({ data }) =>
     </div>
   );
 };
+
+// --- Written Quiz Slide (STORY MODE + SIGNATURE) ---
+export const WrittenQuizSlide: React.FC<{ data: SlideData }> = ({ data }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [history, setHistory] = useState<any[]>([]); 
+  const [isSigned, setIsSigned] = useState(false); // New state for signature
+
+  const handleOptionClick = (idx: number) => {
+    setSelectedOption(idx);
+  };
+
+  const nextQuestion = () => {
+    if (selectedOption === null) return;
+    
+    // Save current interaction to history
+    const question = data.content.questions[currentQuestion];
+    const isCorrect = selectedOption === question.correctIndex;
+    
+    setHistory([...history, { 
+      speaker: question.speaker,
+      text: question.question.replace('______', `[${question.options[selectedOption]}]`),
+      speaker2: question.speaker2,
+      text2: question.question2 ? question.question2.replace('______', `[${question.options[selectedOption]}]`) : null,
+      isCorrect
+    }]);
+
+    if (currentQuestion < data.content.questions.length - 1) {
+      setCurrentQuestion(prev => prev + 1);
+      setSelectedOption(null);
+    }
+  };
+
+  const resetQuiz = () => {
+      setCurrentQuestion(0);
+      setSelectedOption(null);
+      setHistory([]);
+      setIsSigned(false);
+  }
+
+  const isFinished = currentQuestion >= data.content.questions.length - 1 && history.length === data.content.questions.length;
+
+  return (
+    <div className="h-full w-full flex flex-col items-center justify-center p-4 md:p-8 bg-slate-50 overflow-y-auto custom-scrollbar">
+       <div className="max-w-4xl w-full space-y-6 animate-in zoom-in duration-300 pb-20">
+          <div className="text-center">
+             <h2 className="text-3xl md:text-5xl font-black text-ocean-900 uppercase tracking-tighter">{data.title}</h2>
+             <p className="text-lg text-slate-500 font-bold mt-2">{data.subtitle}</p>
+          </div>
+
+          <div className="bg-[#f0f9ff] rounded-[4px] shadow-2xl overflow-hidden border-l-8 border-ocean-600 relative" style={{ backgroundImage: 'linear-gradient(#e5e7eb 1px, transparent 1px)', backgroundSize: '100% 2rem' }}>
+             {/* Paper Header */}
+             <div className="bg-ocean-800 text-white p-4 flex justify-between items-center">
+                 <span className="font-mono uppercase tracking-widest">Incident Report #402</span>
+                 <span className="font-bold">CONFIDENTIAL</span>
+             </div>
+
+             <div className="p-8 md:p-12 space-y-6 font-serif text-lg leading-loose text-slate-800">
+                <p className="italic text-slate-500 border-b border-slate-300 pb-4 mb-6">{data.content.context}</p>
+
+                {/* History (Past interactions) */}
+                <div className="space-y-6 opacity-80">
+                    {history.map((h, i) => (
+                        <div key={i} className="space-y-2">
+                            <div className="flex gap-4">
+                                <span className="font-bold uppercase text-xs w-24 text-right shrink-0 mt-1 text-slate-400">{h.speaker}:</span>
+                                <span className={h.isCorrect ? "text-slate-800" : "text-red-500 line-through"}>{h.text}</span>
+                            </div>
+                            {h.speaker2 && (
+                                <div className="flex gap-4">
+                                    <span className="font-bold uppercase text-xs w-24 text-right shrink-0 mt-1 text-slate-400">{h.speaker2}:</span>
+                                    <span className={h.isCorrect ? "text-ocean-700 font-bold" : "text-red-500 font-bold"}>{h.text2}</span>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Current Interaction */}
+                {!isFinished && (
+                    <div className="bg-white p-6 rounded-xl shadow-md border-2 border-ocean-200 animate-in slide-in-from-bottom-4">
+                        <div className="space-y-4 mb-6">
+                             <div className="flex gap-4 items-center">
+                                <span className="font-bold uppercase text-xs w-24 text-right shrink-0 text-slate-500">{data.content.questions[currentQuestion].speaker}:</span>
+                                <span className="text-xl">{data.content.questions[currentQuestion].question}</span>
+                            </div>
+                             {data.content.questions[currentQuestion].speaker2 && (
+                                <div className="flex gap-4 items-center">
+                                    <span className="font-bold uppercase text-xs w-24 text-right shrink-0 text-slate-500">{data.content.questions[currentQuestion].speaker2}:</span>
+                                    <span className="text-xl font-bold text-ocean-600">{data.content.questions[currentQuestion].question2}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                           {data.content.questions[currentQuestion].options.map((opt: string, idx: number) => (
+                             <button 
+                               key={idx} 
+                               onClick={() => handleOptionClick(idx)}
+                               className={`p-3 rounded-lg border-2 font-bold transition-all ${selectedOption === idx ? 'bg-ocean-600 text-white border-ocean-600' : 'bg-slate-50 border-slate-200 hover:border-ocean-300'}`}
+                             >
+                                {opt}
+                             </button>
+                           ))}
+                        </div>
+                        
+                        <div className="mt-4 flex justify-end">
+                            <button 
+                                onClick={nextQuestion} 
+                                disabled={selectedOption === null}
+                                className="bg-ocean-800 text-white px-6 py-2 rounded-lg font-bold disabled:opacity-50 hover:bg-ocean-900"
+                            >
+                                Confirm Entry &raquo;
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {isFinished && !isSigned && (
+                    <div className="bg-ocean-50 p-6 rounded-xl border border-ocean-200 text-center space-y-4 animate-in fade-in">
+                        <p className="font-bold text-ocean-800">Review complete. Please sign to close the case.</p>
+                        <button 
+                            onClick={() => setIsSigned(true)}
+                            className="font-serif text-3xl text-blue-900 border-b-2 border-blue-900 hover:text-blue-700 hover:border-blue-700 transition-colors"
+                        >
+                            x ________________ (Click to Sign)
+                        </button>
+                    </div>
+                )}
+
+                {isSigned && (
+                    <div className="relative text-center py-10">
+                        {/* CASE CLOSED STAMP */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-8 border-red-600 text-red-600 font-black text-6xl md:text-8xl p-4 -rotate-12 opacity-80 animate-in zoom-in duration-300 uppercase tracking-tighter mix-blend-multiply">
+                            CASE CLOSED
+                        </div>
+                        <h3 className="text-3xl font-black text-ocean-600 mb-4 opacity-50">REPORT FILED</h3>
+                        <button onClick={resetQuiz} className="text-slate-400 hover:text-ocean-600 underline relative z-10">Start New Report</button>
+                    </div>
+                )}
+             </div>
+          </div>
+       </div>
+    </div>
+  );
+}
+
+// --- Time Drill Slide (SVG CLOCK ADDED) ---
+export const TimeDrillSlide: React.FC<{ data: SlideData }> = ({ data }) => {
+    const [currentDrill, setCurrentDrill] = useState(0);
+    const [score, setScore] = useState(0);
+    const [showResult, setShowResult] = useState<boolean | null>(null);
+
+    const handleAnswer = (option: string) => {
+        if (showResult !== null) return;
+        
+        const correct = option === data.content.games[currentDrill].correct;
+        if (correct) setScore(s => s + 1);
+        setShowResult(correct);
+
+        setTimeout(() => {
+            if (currentDrill < data.content.games.length - 1) {
+                setCurrentDrill(p => p + 1);
+                setShowResult(null);
+            } else {
+                // Game Over state logic could go here
+            }
+        }, 1500);
+    };
+
+    // Helper to draw clock hands
+    const ClockFace = ({ timeStr }: { timeStr: string }) => {
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        
+        // Calculate angles
+        // Minute hand: 6 degrees per minute (360 / 60)
+        const minuteAngle = minutes * 6;
+        // Hour hand: 30 degrees per hour (360 / 12) + 0.5 degrees per minute (30 / 60)
+        const hourAngle = (hours % 12) * 30 + minutes * 0.5;
+
+        return (
+            <div className="relative w-48 h-48 md:w-64 md:h-64 bg-white rounded-full border-8 border-slate-700 shadow-2xl flex items-center justify-center">
+                {/* Clock Markings */}
+                {[...Array(12)].map((_, i) => (
+                    <div 
+                        key={i} 
+                        className="absolute w-1 h-3 bg-slate-300" 
+                        style={{ transform: `rotate(${i * 30}deg) translateY(-85px)` }}
+                    ></div>
+                ))}
+                {[...Array(4)].map((_, i) => (
+                    <div 
+                        key={i} 
+                        className="absolute w-2 h-4 bg-slate-800" 
+                        style={{ transform: `rotate(${i * 90}deg) translateY(-85px)` }}
+                    ></div>
+                ))}
+
+                {/* Hour Hand */}
+                <div 
+                    className="absolute w-2 h-16 bg-black rounded-full origin-bottom"
+                    style={{ transform: `rotate(${hourAngle}deg) translateY(-50%)`, bottom: '50%' }}
+                ></div>
+
+                {/* Minute Hand */}
+                <div 
+                    className="absolute w-1.5 h-24 bg-red-600 rounded-full origin-bottom"
+                    style={{ transform: `rotate(${minuteAngle}deg) translateY(-50%)`, bottom: '50%' }}
+                ></div>
+                
+                {/* Center Dot */}
+                <div className="absolute w-4 h-4 bg-slate-800 rounded-full z-10"></div>
+            </div>
+        );
+    };
+
+    return (
+      <div className="h-full w-full flex flex-col md:flex-row p-4 md:p-8 gap-6 bg-slate-50 overflow-y-auto custom-scrollbar">
+         {/* Left Column: Explanation */}
+         <div className="flex-1 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl border-t-8 border-ocean-600 flex flex-col justify-center space-y-8">
+            <h2 className="text-3xl md:text-5xl font-black text-ocean-900 uppercase tracking-tighter">Time Protocol</h2>
+            
+            <div className="space-y-6">
+               {data.content.explanation.map((item: any, i: number) => (
+                 <div key={i} className="flex items-center gap-6 group">
+                    <div className="w-24 text-right font-black text-ocean-500 text-lg md:text-xl uppercase leading-tight group-hover:text-ocean-700 transition-colors">
+                       {item.label}
+                    </div>
+                    <div className="w-1 h-12 bg-slate-200 rounded-full group-hover:bg-ocean-300 transition-colors"></div>
+                    <div className="flex-1 text-slate-600 font-medium text-lg">
+                       {item.desc}
+                    </div>
+                 </div>
+               ))}
+            </div>
+
+            <div className="bg-ocean-50 p-6 rounded-2xl border border-ocean-100">
+               <div className="flex items-center gap-4 text-ocean-800 font-serif italic">
+                  <span className="text-4xl">💡</span>
+                  <p>Remember: For minutes 1-30 use <strong>PAST</strong>. For minutes 31-59 use <strong>TO</strong>.</p>
+               </div>
+            </div>
+         </div>
+
+         {/* Right Column: Game */}
+         <div className="flex-1 bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl flex flex-col items-center justify-center text-white relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-amber-500 to-green-500"></div>
+            
+            <div className="mb-8 text-center w-full flex flex-col items-center">
+               <h3 className="text-ocean-300 font-bold uppercase tracking-widest text-sm mb-6">Drill {currentDrill + 1} / {data.content.games.length}</h3>
+               
+               {/* SVG Clock Display */}
+               <ClockFace timeStr={data.content.games[currentDrill].time} />
+               
+               <div className="mt-6 text-2xl font-mono font-black tracking-widest text-slate-500">
+                  {data.content.games[currentDrill].time}
+               </div>
+            </div>
+
+            <div className="w-full space-y-4 max-w-md">
+               {data.content.games[currentDrill].options.map((opt: string, idx: number) => (
+                 <button 
+                   key={idx}
+                   onClick={() => handleAnswer(opt)}
+                   className={`w-full p-4 rounded-xl font-bold text-lg md:text-xl transition-all transform active:scale-95 ${
+                      showResult === null 
+                        ? 'bg-white/10 hover:bg-white/20 text-white border border-white/10' 
+                        : opt === data.content.games[currentDrill].correct 
+                           ? 'bg-green-500 text-white border-green-400 scale-105 shadow-lg shadow-green-500/50'
+                           : 'bg-white/5 text-slate-500 border-transparent opacity-50'
+                   }`}
+                 >
+                    {opt}
+                 </button>
+               ))}
+            </div>
+            
+            <div className="mt-8 flex items-center gap-2 text-slate-400 font-mono text-sm">
+               <span>SCORE:</span>
+               <span className="text-white font-bold">{score * 100} PTS</span>
+            </div>
+
+            {currentDrill === data.content.games.length - 1 && showResult !== null && (
+               <div className="absolute inset-0 bg-ocean-900/95 backdrop-blur-md flex items-center justify-center flex-col animate-in fade-in zoom-in">
+                  <div className="text-6xl mb-4">🏆</div>
+                  <h2 className="text-4xl font-black text-white mb-2">CHRONO MASTER</h2>
+                  <p className="text-ocean-300 text-xl">Final Score: {score}/{data.content.games.length}</p>
+               </div>
+            )}
+         </div>
+      </div>
+    );
+}
 
 // --- Debrief ---
 export const DebriefSlide: React.FC<{ data: SlideData }> = ({ data }) => {
