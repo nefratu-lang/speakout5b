@@ -2,26 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { SLIDES, LESSON_TITLE } from './constants';
 import { SlideType } from './types';
 import {
-  CoverSlide,
+  CoverSlide, // ARTIK EKLENDİ
   ObjectivesSlide,
-  IceBreakerSlide,
-  ReadingSlide,
-  ComprehensionMCSlide,
-  GrammarSlide,
-  DrillSlide,
-  MatchingSlide,
-  ChecklistSlide,
-  DebriefSlide,
-  ImperativesSlide,
-  VerbChallengeSlide,
-  ScrambleSlide,
-  GrammarAnalysisSlide,
-  DailyReportSlide,
-  ReadingChallengeSlide,
-  LegendDossierSlide,
-  GrammarRecapSlide,
-  TacticalDrillSlide,
-  ClassroomGameSlide
+  GrammarStructureSlide,
+  VerbGridSlide,
+  GameIntroSlide,
+  V2SentenceBuilderSlide,
+  IFrameSlide,
+  NegativesQuestionsSlide,
+  PracticeDrillsSlide,
+  ReadingComprehensionSlide,
+  SpeakingHubSlide,
+  ApologyResponseSlide,
+  WrittenQuizSlide,
+  TimeDrillSlide,
+  DebriefSlide
 } from './components/SlideComponents';
 
 const App = () => {
@@ -34,7 +29,7 @@ const App = () => {
   const nextSlide = () => { if (currentSlideIndex < SLIDES.length - 1) setCurrentSlideIndex(prev => prev + 1); };
   const prevSlide = () => { if (currentSlideIndex > 0) setCurrentSlideIndex(prev => prev - 1); };
 
-  // --- GARANTİ ÇALIŞAN FULL SCREEN FONKSİYONU ---
+  // --- FULLSCREEN TOGGLE (GÜÇLENDİRİLMİŞ) ---
   const toggleFullscreen = () => {
     const doc = window.document as any;
     const docEl = doc.documentElement as any;
@@ -62,7 +57,7 @@ const App = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange); // Safari desteği
     
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -73,35 +68,29 @@ const App = () => {
 
   const renderSlideContent = () => {
     switch (currentSlide.type) {
-      // Kapak sayfasına tıklama komutunu gönderiyoruz (Destekliyorsa çalışır)
       case SlideType.COVER: return <CoverSlide data={currentSlide} onNext={nextSlide} />;
       case SlideType.OBJECTIVES: return <ObjectivesSlide data={currentSlide} />;
-      case SlideType.ICE_BREAKER: return <IceBreakerSlide data={currentSlide} onNext={nextSlide} />;
-      case SlideType.READING: return <ReadingSlide data={currentSlide} />;
-      case SlideType.COMPREHENSION_MC: return <ComprehensionMCSlide data={currentSlide} />;
-      case SlideType.GRAMMAR: return <GrammarSlide data={currentSlide} />;
-      case SlideType.DRILL: return <DrillSlide data={currentSlide} />;
-      case SlideType.MATCHING: return <MatchingSlide data={currentSlide} />;
-      case SlideType.CHECKLIST: return <ChecklistSlide data={currentSlide} />;
-      case SlideType.IMPERATIVES: return <ImperativesSlide data={currentSlide} />;
-      case SlideType.VERB_CHALLENGE: return <VerbChallengeSlide data={currentSlide} />;
-      case SlideType.SCRAMBLE: return <ScrambleSlide data={currentSlide} />;
-      case SlideType.GRAMMAR_ANALYSIS: return <GrammarAnalysisSlide data={currentSlide} />;
-      case SlideType.DAILY_REPORT: return <DailyReportSlide data={currentSlide} />;
-      case SlideType.READING_CHALLENGE: return <ReadingChallengeSlide data={currentSlide} />;
-      case SlideType.LEGEND_DOSSIER: return <LegendDossierSlide data={currentSlide} />;
-      case SlideType.GRAMMAR_RECAP: return <GrammarRecapSlide data={currentSlide} />;
-      case SlideType.TACTICAL_DRILL: return <TacticalDrillSlide data={currentSlide} />;
-      case SlideType.CLASSROOM_GAME: return <ClassroomGameSlide data={currentSlide} />;
+      case SlideType.GRAMMAR_STRUCTURE: return <GrammarStructureSlide data={currentSlide} />;
+      case SlideType.VERB_GRID: return <VerbGridSlide data={currentSlide} />;
+      case SlideType.GAME_INTRO: return <GameIntroSlide data={currentSlide} />;
+      case SlideType.V2_SENTENCE_BUILDER: return <V2SentenceBuilderSlide data={currentSlide} />;
+      case SlideType.IFRAME: return <IFrameSlide data={currentSlide} />;
+      case SlideType.NEGATIVES_QUESTIONS: return <NegativesQuestionsSlide data={currentSlide} />;
+      case SlideType.PRACTICE_DRILLS: return <PracticeDrillsSlide data={currentSlide} />;
+      case SlideType.READING_COMPREHENSION: return <ReadingComprehensionSlide data={currentSlide} />;
+      case SlideType.SPEAKING_HUB: return <SpeakingHubSlide data={currentSlide} />;
+      case SlideType.APOLOGY_RESPONSE: return <ApologyResponseSlide data={currentSlide} />;
+      case SlideType.WRITTEN_QUIZ: return <WrittenQuizSlide data={currentSlide} />;
+      case SlideType.TIME_DRILL: return <TimeDrillSlide data={currentSlide} />;
       case SlideType.DEBRIEF: return <DebriefSlide data={currentSlide} />;
-      default: return <div className="p-10 text-slate-800">Slide type implementation pending.</div>;
+      default: return <div className="p-10 text-slate-800">Slide content not implemented</div>;
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col bg-slate-50 font-sans overflow-hidden text-slate-800 relative">
-      
-      {/* --- KURTARICI BUTON (En Üst Katman: z-9999) --- */}
+    <div className="w-full h-full flex flex-col bg-ocean-50 font-sans overflow-hidden text-slate-800 relative">
+        
+      {/* --- FULLSCREEN BUTONU (En Üstte - Z-9999) --- */}
       <button 
         onClick={toggleFullscreen}
         className="fixed top-2 right-4 z-[9999] p-2 bg-white/90 hover:bg-white backdrop-blur-sm text-slate-800 rounded-full shadow-lg border-2 border-slate-200 transition-all active:scale-95 group"
@@ -114,28 +103,73 @@ const App = () => {
         )}
       </button>
 
-      {/* Header */}
+      {/* Top Bar (Header) */}
       {currentSlide.type !== SlideType.COVER && (
-        <header className="bg-white border-b border-slate-200 h-12 md:h-14 flex items-center justify-between px-3 md:px-8 shadow-sm shrink-0 z-20">
-          <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
-              <span className="text-xl text-blue-600">⚓</span>
-              <h1 className="text-slate-800 font-bold font-mono text-xs md:text-base truncate uppercase tracking-widest">{LESSON_TITLE}</h1>
-          </div>
-          <div className="text-slate-500 font-mono text-xs md:text-sm bg-slate-100 px-3 py-1 border border-slate-200 rounded mr-12 md:mr-0">LOG: {currentSlideIndex + 1}/{SLIDES.length}</div>
+        <header className="bg-white border-b border-ocean-100 h-12 md:h-14 flex items-center justify-between px-3 md:px-8 shadow-sm shrink-0 z-20">
+            <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
+                <span className="text-xl">⚓</span>
+                <h1 className="text-ocean-900 font-bold text-xs md:text-base truncate uppercase tracking-wider">{LESSON_TITLE}</h1>
+            </div>
+            <div className="text-slate-400 font-mono text-xs md:text-sm bg-slate-100 px-2 py-1 rounded">
+            {currentSlideIndex + 1}/{SLIDES.length}
+            </div>
         </header>
       )}
 
       {/* Progress Bar */}
       {currentSlide.type !== SlideType.COVER && (
-        <div className="h-1 bg-slate-200 w-full shrink-0 z-20"><div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${progress}%` }} /></div>
+        <div className="h-1.5 bg-ocean-100 w-full shrink-0 z-20">
+            <div 
+            className="h-full bg-ocean-600 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+            style={{ width: `${progress}%` }}
+            />
+        </div>
       )}
 
-      <main className="flex-1 overflow-hidden relative w-full"><div className="absolute inset-0 w-full h-full z-10">{renderSlideContent()}</div></main>
-      
-      <footer className="bg-white border-t border-slate-200 px-3 py-3 md:px-6 md:py-4 shrink-0 z-20 flex justify-between items-center pb-safe">
-        <button onClick={prevSlide} disabled={currentSlideIndex === 0} className="px-6 py-3 rounded-sm font-mono text-sm disabled:opacity-20 bg-slate-100 border border-slate-200"><span>&lt; PREV</span></button>
-        <button onClick={nextSlide} disabled={currentSlideIndex === SLIDES.length - 1} className="px-6 py-3 rounded-sm font-bold font-mono text-sm bg-blue-700 text-white shadow-lg border border-blue-600"><span>NEXT &gt;</span></button>
-      </footer>
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-hidden relative w-full">
+        <div className="absolute inset-0 w-full h-full z-10">
+            {renderSlideContent()}
+        </div>
+      </main>
+
+      {/* Navigation Footer */}
+      {currentSlide.type !== SlideType.COVER && (
+        <footer className="bg-white border-t border-slate-200 px-3 py-3 md:px-6 md:py-4 shrink-0 z-20 flex justify-between items-center shadow-[0_-4px_15px_-3px_rgba(0,0,0,0.1)] pb-safe">
+            <button
+            onClick={prevSlide}
+            disabled={currentSlideIndex === 0}
+            className="flex items-center justify-center gap-2 w-12 h-12 md:w-auto md:h-auto md:px-6 md:py-3 rounded-full md:rounded-lg font-bold transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed bg-slate-200 text-slate-600 hover:bg-slate-300 shadow-sm"
+            aria-label="Previous Slide"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            <span className="hidden md:inline">BACK</span>
+            </button>
+
+            <div className="hidden lg:flex gap-1.5 overflow-x-auto max-w-[50%] px-2">
+            {SLIDES.map((_, idx) => (
+                <button
+                key={idx}
+                onClick={() => setCurrentSlideIndex(idx)}
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all shrink-0 ${idx === currentSlideIndex ? 'bg-ocean-600 scale-125' : 'bg-slate-300 hover:bg-ocean-300'}`}
+                />
+            ))}
+            </div>
+
+            <button
+            onClick={nextSlide}
+            disabled={currentSlideIndex === SLIDES.length - 1}
+            className="flex items-center justify-center gap-2 w-auto px-6 py-3 rounded-full md:rounded-lg font-bold transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed bg-ocean-600 text-white hover:bg-ocean-700 shadow-md shadow-ocean-500/30"
+            >
+            <span className="text-sm md:text-base">NEXT</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            </svg>
+            </button>
+        </footer>
+      )}
     </div>
   );
 };
